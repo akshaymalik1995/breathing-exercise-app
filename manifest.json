@@ -3,7 +3,7 @@
     "background_color": "#ffffff",
     "display": "fullscreen",
     "scope": "/",
-    "start_url": "/index.html",
+    "start_url": "/breathing-exercise-app/",
     "app_name": "Breathe",
     "short_name": "Breathe",
     "description": "A Breathing Exercise App",
