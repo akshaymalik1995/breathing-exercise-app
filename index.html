@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breathe</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="jumbotron"><h1 class="text-center">Breathing Exercise</h1></div>
+
+   
+
+    <div class="row justify-content-center">
+        <div class="text-center col-sm-12 col-lg-6">
+            
+            <svg  width="200" height="200">
+                <circle cx="100" cy="100" r="50" stroke="green" stroke-width="1" fill="white" />
+            </svg>
+            
+        </div>
+        <div class="col-sm-12 col-lg-6 mx-auto">
+            <div class="mt-4">
+                <h1 class="count text-center"></h1> 
+
+            </div>
+
+            <div class="my-4">
+                <h3 class="text-center breathe-mode"></h3>
+            </div>
+
+            
+            
+
+            <div class="text-center mt-5">
+                <button class="start mx-2 btn btn-primary">Start</button>
+                <button class="reset mx-2 btn btn-secondary">Reset</button>
+
+            </div>
+            
+        </div>
+    </div>
+
+
+    
+    
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    //Get the circle element
+    const circle = document.querySelector("circle")
+    const breathe_mode =  document.querySelector(".breathe-mode")
+    const start = document.querySelector(".start")
+    const reset = document.querySelector(".reset")
+    const count = document.querySelector(".count")
+
+
+    let breathe_in = true
+
+    let breathe_count = 0
+    count.innerHTML = breathe_count
+    function increase_radius() {
+        let radius = circle.getAttribute("r")
+        radius = parseInt(radius)
+        
+        if (breathe_in) {
+            breathe_mode.innerHTML = "Inhale!"
+            circle.setAttribute("fill", "yellow")
+            radius = radius + 1
+            if (radius == 100){
+                breathe_in = false
+            }
+        }
+        else{
+            breathe_mode.innerHTML = "Exhale!"
+            circle.setAttribute("fill", "red")
+            radius = radius - 1
+            if (radius == 50){
+                breathe_in = true
+                breathe_count = breathe_count + 1
+                count.innerHTML = breathe_count
+            }
+        }
+        circle.setAttribute("r" , radius)
+        
+    }
+
+    let interval
+    let breathing = true
+    
+    start.addEventListener("click" , () => {
+        if (breathing){
+            breathing = false
+            
+            interval = setInterval(increase_radius, 80)
+
+        }
+            
+    })
+
+
+
+    reset.addEventListener("click" , () => {
+        clearInterval(interval)
+        breathing = true
+        breathe_in = true
+        circle.setAttribute("r" , 50)
+        breathe_count = 0
+        count.innerHTML = breathe_count
+        circle.setAttribute("fill", "white")
+        breathe_mode.innerHTML = ""
+    })
+
+
+    
+
+    
+
+</script>
+</body>
+</html>
