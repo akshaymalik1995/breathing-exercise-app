@@ -1,0 +1,32 @@
+{
+    "theme_color": "#f69435",
+    "background_color": "#ffffff",
+    "display": "fullscreen",
+    "scope": "/",
+    "start_url": "/",
+    "app_name": "Breathe",
+    "short_name": "Breathe",
+    "description": "A Breathing Exercise App",
+    "icons": [
+        {
+            "src": "/icons/android-launchericon-192-192.png",
+            "sizes": "192x",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/android-launchericon-96-96.png",
+            "sizes": "96x",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/android-launchericon-144-144.png",
+            "sizes": "144x",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/android-launchericon-512-512.png",
+            "sizes": "512x",
+            "type": "image/png"
+        }
+    ]
+}
