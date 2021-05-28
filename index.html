@@ -17,11 +17,14 @@
     <div class="row justify-content-center">
         <div class="text-center col-sm-12 col-lg-6">
             
-            <svg  width="200" height="200">
-                <circle cx="100" cy="100" r="50" stroke="green" stroke-width="1" fill="white" />
+            <svg width="40" height="200">
+                <!-- <circle cx="100" cy="100" r="50" stroke="green" stroke-width="1" fill="white" /> -->
+                <rect width="40" height="200" style="fill:rgb(221, 118, 118);stroke-width:1;stroke:rgb(0,0,0)" />
+                <rect class="rect" width="40" height="200" style="fill:rgb(255, 255, 255);stroke-width:1;stroke:rgb(0,0,0)" />
             </svg>
             
         </div>
+    
         <div class="col-sm-12 col-lg-6 mx-auto">
             <div class="mt-4">
                 <h1 class="count text-center"></h1> 
@@ -37,7 +40,9 @@
 
             <div class="text-center mt-5">
                 <button class="start mx-2 btn btn-primary">Start</button>
-                <button class="reset mx-2 btn btn-secondary">Reset</button>
+                <button class="pause mx-2 btn btn-secondary">Pause</button>
+                <button class="reset mx-2 btn btn-danger">Reset</button>
+                
 
             </div>
             
@@ -56,52 +61,68 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    //Get the circle element
-    const circle = document.querySelector("circle")
+    //Get the elements
+    // Get the circle shape
+    //const circle = document.querySelector("circle")
+    const rect = document.querySelector(".rect")
+    // We will INHALE OR EXHALE based on the breathing mode
     const breathe_mode =  document.querySelector(".breathe-mode")
+
     const start = document.querySelector(".start")
+    const pause = document.querySelector(".pause")
     const reset = document.querySelector(".reset")
+
+    // We will output number of breathe count
     const count = document.querySelector(".count")
 
 
-    let breathe_in = true
+    let breathe_count
+    if (localStorage.breathe_count){
+        breathe_count = Number(localStorage.breathe_count)
+    } else {
+        breathe_count = 0
+    }
+    
+    count.innerHTML = breathe_count // Write the count value to html tag
 
-    let breathe_count = 0
-    count.innerHTML = breathe_count
-    function increase_radius() {
-        let radius = circle.getAttribute("r")
-        radius = parseInt(radius)
+    // FUNCTION TO INCREASE OR DECREASE RADIUS OF THE CIRCLE
+    let inhaling = true
+    function change_height() {
+        let height = rect.getAttribute("height")  // get the radius
         
-        if (breathe_in) {
-            breathe_mode.innerHTML = "Inhale!"
-            circle.setAttribute("fill", "yellow")
-            radius = radius + 1
-            if (radius == 100){
-                breathe_in = false
+        height = parseInt(height) //convert it to integer
+        
+        if (inhaling) {  
+            breathe_mode.innerHTML = "Inhale" // Change breathe mode
+            
+            height = height - 5
+            if (height == 00){
+                inhaling = false
             }
         }
         else{
-            breathe_mode.innerHTML = "Exhale!"
-            circle.setAttribute("fill", "red")
-            radius = radius - 1
-            if (radius == 50){
-                breathe_in = true
+            breathe_mode.innerHTML = "Exhale"
+            
+            height = height + 5
+            if (height == 200){
+                inhaling = true
                 breathe_count = breathe_count + 1
-                count.innerHTML = breathe_count
+                localStorage.setItem("breathe_count", breathe_count)
+                count.innerHTML = Number(localStorage.breathe_count)
             }
         }
-        circle.setAttribute("r" , radius)
+        rect.setAttribute("height" , height)
         
     }
 
-    let interval
-    let breathing = true
+    let interval // This is the variable for the setinterval function we will execute
+    let breathing = false
     
     start.addEventListener("click" , () => {
-        if (breathing){
-            breathing = false
+        if (!breathing){
+            breathing = true
             
-            interval = setInterval(increase_radius, 80)
+            interval = setInterval(change_height, 80)
 
         }
             
@@ -109,15 +130,30 @@
 
 
 
-    reset.addEventListener("click" , () => {
+    pause.addEventListener("click" , () => {
         clearInterval(interval)
-        breathing = true
-        breathe_in = true
-        circle.setAttribute("r" , 50)
-        breathe_count = 0
+        breathing = false
+        inhaling = true
+        rect.setAttribute("height" , 200)
+        //breathe_count = 0
         count.innerHTML = breathe_count
-        circle.setAttribute("fill", "white")
+        //circle.setAttribute("fill", "white")
         breathe_mode.innerHTML = ""
+    })
+
+    reset.addEventListener("click", () => {
+        clearInterval(interval)
+        breathing = false
+        inhaling = true
+        rect.setAttribute("height" , 200)
+        breathe_mode.innerHTML = ""
+        if (localStorage.breathe_count){
+            breathe_count = 0
+            localStorage.setItem("breathe_count", breathe_count)
+            count.innerHTML = Number(localStorage.breathe_count)
+            
+        }
+        
     })
 
 
