@@ -7,7 +7,7 @@ const breathe_mode =  document.querySelector(".breathe-mode")
 
 const start = document.querySelector(".start")
 const pause = document.querySelector(".pause")
-const reset = document.querySelector(".reset")
+
 
 // We will output number of breathe count
 const count = document.querySelector(".count")
