@@ -7,6 +7,7 @@ const breathe_mode =  document.querySelector(".breathe-mode")
 
 const start = document.querySelector(".start")
 const pause = document.querySelector(".pause")
+const reset = document.querySelector(".reset")
 
 
 // We will output number of breathe count
@@ -24,6 +25,7 @@ count.innerHTML = breathe_count // Write the count value to html tag
 
 // FUNCTION TO INCREASE OR DECREASE RADIUS OF THE CIRCLE
 let inhaling = true
+
 function change_height() {
     let height = rect.getAttribute("height")  // get the radius
     
@@ -33,8 +35,12 @@ function change_height() {
         breathe_mode.innerHTML = "Inhale" // Change breathe mode
         
         height = height - 5
-        if (height == 00){
+        if (height == 00) {
+           
             inhaling = false
+            breathe_count = breathe_count + 1
+            localStorage.setItem("breathe_count", breathe_count)
+            count.innerHTML = Number(localStorage.breathe_count)
         }
     }
     else{
@@ -43,9 +49,8 @@ function change_height() {
         height = height + 5
         if (height == 200){
             inhaling = true
-            breathe_count = breathe_count + 1
-            localStorage.setItem("breathe_count", breathe_count)
-            count.innerHTML = Number(localStorage.breathe_count)
+           
+            
         }
     }
     rect.setAttribute("height" , height)
@@ -77,6 +82,20 @@ pause.addEventListener("click" , () => {
     
     breathe_mode.innerHTML = ""
 })
+
+reset.addEventListener("click" , () => {
+    clearInterval(interval)
+    breathing = false
+    inhaling = true
+    rect.setAttribute("height" , 200)
+    breathe_count = 0
+    localStorage.setItem("breathe_count" , breathe_count)
+    count.innerHTML = breathe_count
+    
+    breathe_mode.innerHTML = ""
+})
+
+
 
 
 
